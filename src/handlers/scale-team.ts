@@ -1,6 +1,8 @@
 import consola from "consola";
 import { createScaleTeamSchema } from "../schema/index.js";
 import { createHandler } from "../utils/create.js";
+import { api } from "#root/api/intra.js";
+import { fetchTeam } from "#root/api/fetches.js";
 
 const { DISCORD_WEBHOOK, AVATAR_URL } = process.env;
 
@@ -10,6 +12,9 @@ export const handleScaleTeam = createHandler(
     const body = req.body;
 
     try {
+      const teams = await fetchTeam(api, body.team.id.toString());
+      const team = teams![0]!;
+
       const res = await fetch(DISCORD_WEBHOOK!, {
         method: "POST",
         headers: {
@@ -18,17 +23,27 @@ export const handleScaleTeam = createHandler(
         body: JSON.stringify({
           embeds: [
             {
-              title: `New Evaluation : ${body.project.name}`,
-              description: `Repo: ${body.team.repo_url}`,
-              author: { name: `${body.team.name} : ${body.team.id}` },
+              title: `${body.project.name}`,
+              description: `Begin At: ${new Date(
+                body.begin_at
+              ).toLocaleString()}\n\nEvaluate by: ${
+                body.user.login
+              }\n\nTeam members:\n${team.users
+                .map((user) => user.login)
+                .join("\n")}`,
+              url: `https://projects.intra.42.fr/projects/${body.project.slug}/projects_users/${team.users[0]?.projects_user_id}`,
             },
           ],
           avatar_url: AVATAR_URL,
           username: "42 Evaluation Tracker",
         }),
       });
-      const data = await res.json();
-      consola.info(data);
+      if (!res.ok) {
+        const data = await res.json();
+        consola.error(
+          "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
+        );
+      }
     } catch (error) {
       consola.error(error);
     }
