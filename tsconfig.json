@@ -1,27 +1,31 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    /* If you're using React: */
-    "jsx": "react-jsx",
-    /* If your code doesn't run in the DOM: */
-    "lib": ["es2022"],
-    "moduleDetection": "force",
-    "module": "ESNext",
-    /* If NOT transpiling with TypeScript: */
-    "moduleResolution": "Bundler",
-    /* Aliases */
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "resolveJsonModule": true,
-    "allowJs": true,
-    /* Strictness */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noEmit": true,
-    /* Base Options: */
+    "module": "NodeNext",
     "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true
-  }
+    "target": "esnext",
+    "noImplicitAny": true,
+    "moduleResolution": "NodeNext",
+    "sourceMap": true,
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    // "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    // "allowJs": false,
+    "baseUrl": "src",
+    "paths": {
+      "#root/*": [
+        "./*"
+      ],
+    },
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
 }

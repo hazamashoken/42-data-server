@@ -1,21 +1,19 @@
-import { createHandler } from '@/utils/create';
-import { BackendError } from '@/utils/errors';
+import { createHandler } from "../utils/create.js";
+import { BackendError } from "../utils/errors.js";
 
-export function authenticate({ secret }: {
-    secret: string;
-}) {
+export function authenticate({ secret }: { secret: string }) {
   return createHandler(async (req, res, next) => {
-    const x_secret = req.headers['x-secret'];
+    const x_secret = req.headers["x-secret"];
 
     if (!x_secret) {
-      throw new BackendError('UNAUTHORIZED', {
-        message: 'Authorization token not found',
+      throw new BackendError("UNAUTHORIZED", {
+        message: "Authorization token not found",
       });
     }
 
     if (x_secret !== secret) {
-      throw new BackendError('UNAUTHORIZED', {
-        message: 'Invalid authorization token',
+      throw new BackendError("UNAUTHORIZED", {
+        message: "Invalid authorization token",
       });
     }
 

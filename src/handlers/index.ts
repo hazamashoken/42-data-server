@@ -1,2 +1,2 @@
-export * from "./logtime.js";
+export * from "./locations.js";
 export * from "./scale-team.js";

@@ -1,20 +1,25 @@
 {
-  "name": "webhook",
+  "name": "42sg-webhook-server",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "type": "module",
+  "engines": {
+    "node": ">= 22.11 < 23"
+  },
   "scripts": {
-    "build": "esbuild src/server.ts --bundle --outfile=build/server.js --platform=node --format=esm --packages=external",
-    "start": "node build/server.js",
+    "build": "tsc",
+    "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "generate": "drizzle-kit generate:pg",
     "migrate": "tsx src/migrate.ts",
-    "lint": "eslint .",
+    "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@codam/fast42": "^2.1.6",
     "consola": "^3.4.0",
     "cors": "^2.8.5",
+    "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.4",
     "drizzle-zod": "^0.6.1",
@@ -31,7 +36,6 @@
     "@types/pg": "^8.11.10",
     "@types/request-ip": "^0.0.41",
     "drizzle-kit": "^0.30.2",
-    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }
