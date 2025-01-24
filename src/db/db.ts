@@ -13,7 +13,7 @@ declare global {
 
 let db: NodePgDatabase<typeof schema>;
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env["NODE_ENV"] !== "production") {
   if (!global.drizzle)
     global.drizzle = drizzle(`${process.env["POSTGRES_URI"]}`, {
       schema,
