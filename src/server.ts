@@ -8,14 +8,27 @@ import { logger } from "./utils/logger.js";
 import routes from "./routes/routes.js";
 import "./api/intra.js";
 
-const { PORT } = process.env;
+const { PORT, PROXY } = process.env;
 
 const app = express();
 app.use(urlencoded({ extended: true }));
 app.use(json());
 app.use(cors());
 app.use(requestIp());
-app.set("trust proxy", true);
+
+function checkProxy(proxySetting: string) {
+  if (proxySetting === "true") {
+    return true;
+  } else if (proxySetting === "false") {
+    return false;
+    //@ts-ignore
+  } else if (!isNaN(proxySetting) && Number(proxySetting) >= 0) {
+    return Number(proxySetting);
+  } else {
+    throw new Error("Invalid proxy setting");
+  }
+}
+app.set("trust proxy", checkProxy(PROXY!));
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
