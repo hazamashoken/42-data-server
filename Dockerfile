@@ -25,4 +25,4 @@ COPY --chown=node:node --from=build /app/package*.json /app/
 
 USER node
 
-CMD ["node", "./dist/bot.js"] 
+CMD ["node", "./dist/server.js"] 
