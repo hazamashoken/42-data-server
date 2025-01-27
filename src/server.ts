@@ -15,6 +15,7 @@ app.use(urlencoded({ extended: true }));
 app.use(json());
 app.use(cors());
 app.use(requestIp());
+app.set("trust proxy", true);
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
