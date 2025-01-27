@@ -1,8 +1,8 @@
 import consola from "consola";
 import { createScaleTeamSchema } from "../schema/index.js";
 import { createHandler } from "../utils/create.js";
-import { api } from "#root/api/intra.js";
-import { fetchTeam } from "#root/api/fetches.js";
+import { api } from "../api/intra.js";
+import { fetchTeam } from "../api/fetches.js";
 
 const { DISCORD_WEBHOOK, AVATAR_URL } = process.env;
 
