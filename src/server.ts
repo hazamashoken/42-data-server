@@ -7,6 +7,11 @@ import consola from "consola";
 import { logger } from "./utils/logger.js";
 import routes from "./routes/routes.js";
 import "./api/intra.js";
+import { cronRMQ } from "./cron/check-devices.js";
+// import {
+//   cronCheckIPAlive,
+//   sendWebhookDownStatus,
+// } from "./cron/check-devices.js";
 
 const { PORT, PROXY } = process.env;
 
@@ -62,6 +67,10 @@ app.use("/api", routes);
 
 app.all("*", handle404Error);
 app.use(errorHandler);
+
+// cronCheckIPAlive.start();
+// sendWebhookDownStatus.start();
+cronRMQ.start();
 
 app.listen(PORT, () => {
   consola.log(`Server is running on port http://localhost:${PORT}`);

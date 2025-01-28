@@ -4,7 +4,7 @@ import { createHandler } from "../utils/create.js";
 import { api } from "../api/intra.js";
 import { fetchTeam } from "../api/fetches.js";
 
-const { DISCORD_WEBHOOK, AVATAR_URL } = process.env;
+const { DISCORD_WEBHOOK_EVAL, AVATAR_URL } = process.env;
 
 export const handleScaleTeam = createHandler(
   createScaleTeamSchema,
@@ -15,7 +15,7 @@ export const handleScaleTeam = createHandler(
       const teams = await fetchTeam(api, body.team.id.toString());
       const team = teams![0]!;
 
-      const res = await fetch(DISCORD_WEBHOOK!, {
+      const res = await fetch(DISCORD_WEBHOOK_EVAL!, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
