@@ -4,7 +4,7 @@ import { CronJob } from "cron";
 // import { deviceCache } from "../lib/cache.js";
 // import { deviceTrackerWH } from "../discord/webhook-sender.js";
 import { checkRMQQueue } from "../lib/rmq_queue_parser.js";
-import consola from "consola";
+// import consola from "consola";
 
 // const hosts = ips;
 // const hosts = ["c3r1s1", "c1r1s2", "c1r1s3"];
@@ -33,8 +33,7 @@ import consola from "consola";
 export const cronRMQ = CronJob.from({
   cronTime: "*/5 * * * *",
   onTick: async function () {
-    consola.info("Checking RMQ queue");
-    checkRMQQueue();
+    await checkRMQQueue();
   },
   timeZone: "Asia/Singapore",
 });

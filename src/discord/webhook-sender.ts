@@ -36,27 +36,27 @@ export async function deviceTrackerWH() {
 export async function rmqTrackerWH(hosts: string[]) {
   try {
     if (hosts.length === 0) return;
-    // const res = await fetch(DISCORD_WEBHOOK_DOWN!, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     embeds: [
-    //       {
-    //         title: `Dells down`,
-    //         description: `${hosts.join("\n")}`,
-    //       },
-    //     ],
-    //     avatar_url: AVATAR_URL,
-    //     username: "42 Device Status",
-    //   }),
-    // });
-    // if (!res.ok) {
-    //   const data = await res.json();
-    //   consola.error(
-    //     "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
-    //   );
-    // }
+    const res = await fetch(DISCORD_WEBHOOK_DOWN!, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        embeds: [
+          {
+            title: `Dells down`,
+            description: `${hosts.join("\n")}`,
+          },
+        ],
+        avatar_url: AVATAR_URL,
+        username: "42 Device Status",
+      }),
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      consola.error(
+        "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
+      );
+    }
   } catch (error) {}
 }

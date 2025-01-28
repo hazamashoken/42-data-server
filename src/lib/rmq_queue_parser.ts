@@ -8,7 +8,6 @@ const { DEEPTHOUGHT_RMQ_URL, DEEPTHOUGHT_AUTH } = process.env;
 
 export async function checkRMQQueue() {
   try {
-    consola.info(`${Buffer.from(DEEPTHOUGHT_AUTH!).toString("base64")}`);
     const res = await fetch(`${DEEPTHOUGHT_RMQ_URL}/api/queues`, {
       method: "GET",
       headers: {
