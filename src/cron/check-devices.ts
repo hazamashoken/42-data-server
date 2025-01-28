@@ -31,7 +31,7 @@ import consola from "consola";
 //   timeZone: "Asia/Singapore",
 // });
 export const cronRMQ = CronJob.from({
-  cronTime: "*/1 * * * *",
+  cronTime: "*/5 * * * *",
   onTick: async function () {
     consola.info("Checking RMQ queue");
     checkRMQQueue();
