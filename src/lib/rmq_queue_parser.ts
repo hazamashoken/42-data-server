@@ -1,6 +1,7 @@
 import consola from "consola";
 import { RmqQueue } from "../types/rmq_queue.js";
-import ips from "../data/ip.json";
+// @ts-ignore
+import ips from "../data/ip.json" with { type: "json" };
 import { rmqTrackerWH } from "../discord/webhook-sender.js";
 
 const { DEEPTHOUGHT_RMQ_URL, DEEPTHOUGHT_AUTH } = process.env;
