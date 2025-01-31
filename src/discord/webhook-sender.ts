@@ -33,9 +33,16 @@ export async function deviceTrackerWH() {
   } catch (error) {}
 }
 
-export async function rmqTrackerWH(hosts: string[]) {
+export async function rmqTrackerWH(comeAlive: string[], goneDead: string[]) {
   try {
-    if (hosts.length === 0) return;
+    if (comeAlive.length === 0 && goneDead.length === 0) return;
+
+    const message = `${
+      comeAlive.length > 0
+        ? `\n:green_circle:\n` + comeAlive.join("\n") + "\n"
+        : ""
+    } ${goneDead.length > 0 ? "\n:red_circle:\n" + goneDead.join("\n") : ""}
+    `;
     const res = await fetch(DISCORD_WEBHOOK_DOWN!, {
       method: "POST",
       headers: {
@@ -44,8 +51,8 @@ export async function rmqTrackerWH(hosts: string[]) {
       body: JSON.stringify({
         embeds: [
           {
-            title: `Dells down`,
-            description: `${hosts.join("\n")}`,
+            title: `Dells Status`,
+            description: message,
           },
         ],
         avatar_url: AVATAR_URL,

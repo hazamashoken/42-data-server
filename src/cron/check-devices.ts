@@ -31,7 +31,7 @@ import { checkRMQQueue } from "../lib/rmq_queue_parser.js";
 //   timeZone: "Asia/Singapore",
 // });
 export const cronRMQ = CronJob.from({
-  cronTime: "*/5 * * * *",
+  cronTime: "*/1 * * * *",
   onTick: async function () {
     await checkRMQQueue();
   },

@@ -3,8 +3,11 @@ import { RmqQueue } from "../types/rmq_queue.js";
 // @ts-ignore
 import ips from "../data/ip.json" with { type: "json" };
 import { rmqTrackerWH } from "../discord/webhook-sender.js";
+// import { deviceCache } from "./cache.js";
 
 const { DEEPTHOUGHT_RMQ_URL, DEEPTHOUGHT_AUTH } = process.env;
+
+let deadList: string[] = [];
 
 export async function checkRMQQueue() {
   try {
@@ -28,11 +31,30 @@ export async function checkRMQQueue() {
 
     const hostnames = queues.map((queue) => queue.name);
 
-    const missing = ips.filter(
+    const dead = ips.filter(
       (ip) => !hostnames.find((host) => host.includes(ip))
     );
 
-    await rmqTrackerWH(missing);
+    const alive = ips.filter((ip) => !dead.includes(ip));
+
+    const comeAlive = [];
+
+    const goneDead = [];
+
+    for (const deadIp of dead) {
+      if (!deadList.some((ip) => deadIp === ip)) {
+        goneDead.push(deadIp);
+      }
+    }
+    for (const aliveIp of alive) {
+      if (deadList.some((ip) => aliveIp === ip)) {
+        comeAlive.push(aliveIp);
+      }
+    }
+
+    deadList = dead;
+
+    await rmqTrackerWH(comeAlive, goneDead);
   } catch (error) {
     consola.error(error);
   }
