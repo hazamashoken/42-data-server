@@ -1,10 +1,12 @@
-import consola from "consola";
 import { createScaleTeamSchema } from "../schema/index.js";
 import { createHandler } from "../utils/create.js";
 import { api } from "../api/intra.js";
 import { fetchTeam } from "../api/fetches.js";
+import { logger as defaultLogger } from "../logger.js";
 
 const { DISCORD_WEBHOOK_EVAL, AVATAR_URL } = process.env;
+
+const logger = defaultLogger.child({ service: "scale-team" });
 
 export const handleScaleTeam = createHandler(
   createScaleTeamSchema,
@@ -40,12 +42,12 @@ export const handleScaleTeam = createHandler(
       });
       if (!res.ok) {
         const data = await res.json();
-        consola.error(
+        logger.error(
           "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
         );
       }
     } catch (error) {
-      consola.error(error);
+      logger.error(error);
     }
 
     res.status(201).send();

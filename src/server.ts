@@ -1,17 +1,14 @@
+import "dotenv/config.js";
 import express, { urlencoded, json } from "express";
 import cors from "cors";
 import { mw as requestIp } from "request-ip";
 import rateLimit from "express-rate-limit";
 import { errorHandler, handle404Error } from "./utils/errors.js";
-import consola from "consola";
-import { logger } from "./utils/logger.js";
+import { logger as middleLogger  } from "./utils/logger.js";
 import routes from "./routes/routes.js";
 import "./api/intra.js";
 import { cronRMQ } from "./cron/check-devices.js";
-// import {
-//   cronCheckIPAlive,
-//   sendWebhookDownStatus,
-// } from "./cron/check-devices.js";
+import { logger } from "./logger.js";
 
 const { PORT, PROXY } = process.env;
 
@@ -39,7 +36,7 @@ app.use(
     windowMs: 15 * 60 * 1000,
     max: 100,
     handler: (req, res) => {
-      consola.warn(`DDoS Attempt from ${req.ip}`);
+      logger.warn(`DDoS Attempt from ${req.ip}`);
       res.status(429).json({
         error: "Too many requests in a short time. Please try in a minute.",
       });
@@ -47,7 +44,7 @@ app.use(
   })
 );
 
-app.use(logger);
+app.use(middleLogger);
 
 app.get("/", (_req, res) => {
   res.json({
@@ -73,5 +70,5 @@ app.use(errorHandler);
 cronRMQ.start();
 
 app.listen(PORT, () => {
-  consola.log(`Server is running on port http://localhost:${PORT}`);
+  logger.info(`Server is running on port http://localhost:${PORT}`);
 });

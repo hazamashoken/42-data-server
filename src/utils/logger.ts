@@ -1,4 +1,4 @@
-import consola from 'consola';
+import { logger as wsLogger } from '../logger.js';
 import type { NextFunction, Request, Response } from 'express';
 
 export function logger(req: Request, _res: Response, next: NextFunction) {
@@ -10,7 +10,7 @@ export function logger(req: Request, _res: Response, next: NextFunction) {
 
   const message = `${ip} [${method}] ${url} HTTP/${version} ${userAgent}`;
 
-  consola.log(message);
+  wsLogger.info(message);
 
   next();
 }

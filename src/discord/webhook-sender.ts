@@ -1,12 +1,11 @@
 import { deviceCache } from "../lib/cache.js";
-import consola from "consola";
+import { logger } from "../logger.js";
 
 const { AVATAR_URL, DISCORD_WEBHOOK_DOWN } = process.env;
 
 export async function deviceTrackerWH() {
   try {
     const ips = Object.entries(deviceCache.data).map(([ip, _]) => ip);
-    consola.info(ips);
     if (ips.length === 0) return;
     const res = await fetch(DISCORD_WEBHOOK_DOWN!, {
       method: "POST",
@@ -26,7 +25,7 @@ export async function deviceTrackerWH() {
     });
     if (!res.ok) {
       const data = await res.json();
-      consola.error(
+      logger.error(
         "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
       );
     }
@@ -43,6 +42,7 @@ export async function rmqTrackerWH(comeAlive: string[], goneDead: string[]) {
         : ""
     } ${goneDead.length > 0 ? "\n:red_circle:\n" + goneDead.join("\n") : ""}
     `;
+    console.info({ goneDead: goneDead, comeAlive: comeAlive }, {service: "rmqTrackerWH"});
     const res = await fetch(DISCORD_WEBHOOK_DOWN!, {
       method: "POST",
       headers: {
@@ -61,7 +61,7 @@ export async function rmqTrackerWH(comeAlive: string[], goneDead: string[]) {
     });
     if (!res.ok) {
       const data = await res.json();
-      consola.error(
+      logger.error(
         "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
       );
     }

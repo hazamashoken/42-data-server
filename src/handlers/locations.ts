@@ -1,9 +1,11 @@
 import { db } from "../db/db.js";
 import { users, logtimes } from "../schema/index.js";
-import consola from "consola";
 import { updateLogtimeSchema } from "../schema/index.js";
 import { createHandler } from "../utils/create.js";
 import { and, eq } from "drizzle-orm";
+import { logger as defaultLogger } from "../logger.js";
+
+const logger = defaultLogger.child({ service: "locations" });
 
 export const handleLocation = createHandler(
   updateLogtimeSchema,
@@ -61,7 +63,7 @@ export const handleLocation = createHandler(
           });
       }
     } catch (error) {
-      consola.error(error);
+      logger.error(error);
     }
 
     res.status(201).send();

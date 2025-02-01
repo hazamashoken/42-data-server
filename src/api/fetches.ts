@@ -1,5 +1,5 @@
-import consola from "consola";
 import { Team } from "./interfaces.js";
+import { logger } from "../logger.js";
 
 const fetchAll42 = async function (
   //@ts-ignore
@@ -10,7 +10,7 @@ const fetchAll42 = async function (
   return new Promise(async (resolve, reject) => {
     try {
       const pages = await api.getAllPages(path, params);
-      consola.log(
+      logger.debug(
         `Retrieving API items: ${pages.length} pages for path ${path}`
       );
 
@@ -19,7 +19,7 @@ const fetchAll42 = async function (
       const pageItems = await Promise.all(
         //@ts-ignore
         pages.map(async (page) => {
-          consola.log(`Fetching page ${++i}/${pages.length}`);
+          logger.debug(`Fetching page ${++i}/${pages.length}`);
           const p = await page;
           if (p.status == 429) {
             throw new Error("Intra API rate limit exceeded");
@@ -34,6 +34,7 @@ const fetchAll42 = async function (
       );
       return resolve(pageItems.flat());
     } catch (err) {
+      logger.error(err);
       return reject(err);
     }
   });
@@ -44,11 +45,11 @@ export async function fetchTeam(api: Fast42, teamId: string): Team[] | null {
   try {
     const team = await fetchAll42(api, `/teams/${teamId}`);
     if (!team) {
-      consola.error(`Team ${teamId} not found`);
+      logger.debug(`Team ${teamId} not found`);
     }
     return team;
   } catch (error) {
-    consola.error(error);
+    logger.error(error);
     return null;
   }
 }

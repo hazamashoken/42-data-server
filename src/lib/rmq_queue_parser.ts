@@ -1,9 +1,12 @@
-import consola from "consola";
 import { RmqQueue } from "../types/rmq_queue.js";
 // @ts-ignore
 import ips from "../data/ip.json" with { type: "json" };
 import { rmqTrackerWH } from "../discord/webhook-sender.js";
 // import { deviceCache } from "./cache.js";
+
+import { logger as defaultLogger } from "../logger.js";
+
+const logger = defaultLogger.child({ service: "rmq_queue_parser" });
 
 const { DEEPTHOUGHT_RMQ_URL, DEEPTHOUGHT_AUTH } = process.env;
 
@@ -22,7 +25,7 @@ export async function checkRMQQueue() {
     });
     if (!res.ok) {
       const data = await res.json();
-      consola.error(
+      logger.error(
         "Failed to fetch RMQ queue: " + JSON.stringify(data, null, 2)
       );
       return;
@@ -56,6 +59,6 @@ export async function checkRMQQueue() {
 
     await rmqTrackerWH(comeAlive, goneDead);
   } catch (error) {
-    consola.error(error);
+    logger.error(error);
   }
 }
