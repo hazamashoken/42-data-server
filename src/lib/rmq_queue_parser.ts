@@ -55,9 +55,10 @@ export async function checkRMQQueue() {
       }
     }
 
+    await rmqTrackerWH(comeAlive, goneDead, deadList);
+    
     deadList = dead;
-
-    await rmqTrackerWH(comeAlive, goneDead);
+    
   } catch (error) {
     logger.error(error);
   }

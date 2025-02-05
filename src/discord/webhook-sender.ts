@@ -32,15 +32,15 @@ export async function deviceTrackerWH() {
   } catch (error) {}
 }
 
-export async function rmqTrackerWH(comeAlive: string[], goneDead: string[]) {
+export async function rmqTrackerWH(comeAlive: string[], goneDead: string[], deadlist: string[] = []) {
   try {
     if (comeAlive.length === 0 && goneDead.length === 0) return;
 
     const message = `${
       comeAlive.length > 0
-        ? `\n:green_circle:\n` + comeAlive.join("\n") + "\n"
+        ? `\n:green_circle: [${comeAlive.length}/${deadlist.length}]\n` + comeAlive.join("\n") + "\n"
         : ""
-    } ${goneDead.length > 0 ? "\n:red_circle:\n" + goneDead.join("\n") : ""}
+    } ${goneDead.length > 0 ? `\n:red_circle: [${goneDead.length}]\n` + goneDead.join("\n") : ""}
     `;
     console.info({ goneDead: goneDead, comeAlive: comeAlive }, {service: "rmqTrackerWH"});
     const res = await fetch(DISCORD_WEBHOOK_DOWN!, {
