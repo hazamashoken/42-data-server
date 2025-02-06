@@ -1,5 +1,6 @@
 import { type NextFunction, type Request, type Response, Router } from 'express';
 import type { z } from 'zod';
+import { logger } from '../logger.js';
 
 export function createRouter(callback: (router: Router) => void) {
   const router = Router();
@@ -47,6 +48,7 @@ export function createHandler<T extends z.ZodType>(
       }
     }
     catch (error) {
+      logger.info(error);
       next(error);
     }
   };
