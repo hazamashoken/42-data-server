@@ -104,10 +104,10 @@ interface Versions {
 }
 
 const teamSchema = z.object({
-  id: z.number().nullable(),
+  id: z.number(),
   project_id: z.number().nullable(),
-  name: z.string().nullable(),
-  created_at: z.string().nullable(),
+  name: z.string(),
+  created_at: z.string(),
   updated_at: z.string().nullable(),
   locked_at: z.string().nullable(),
   closed_at: z.string().nullable(),
@@ -121,22 +121,22 @@ const teamSchema = z.object({
 });
 
 const flagSchema = z.object({
-  id: z.number().nullable(),
+  id: z.number(),
   name: z.string().nullable(),
   positive: z.boolean().nullable(),
   icon: z.string().nullable(),
-  created_at: z.string().nullable(),
+  created_at: z.string(),
   updated_at: z.string().nullable(),
 });
 
 const scaleSchema = z.object({
-  id: z.number().nullable(),
+  id: z.number(),
   name: z.string().nullable(),
   comment: z.string().nullable(),
   introduction_md: z.string().nullable(),
   disclaimer_md: z.string().nullable(),
   guidelines_md: z.string().nullable(),
-  created_at: z.string().nullable(),
+  created_at: z.string(),
   updated_at: z.string().nullable(),
   evaluation_id: z.number().nullable(),
   is_primary: z.boolean().nullable(),
@@ -148,7 +148,7 @@ const scaleSchema = z.object({
 });
 
 const project = z.object({
-  id: z.number().nullable(),
+  id: z.number(),
   name: z.string().nullable(),
   slug: z.string().nullable(),
 });
@@ -164,7 +164,7 @@ const image = z.object({
 });
 
 const user = z.object({
-  id: z.number().nullable(),
+  id: z.number(),
   email: z.string().nullable(),
   login: z.string().nullable(),
   first_name: z.string().nullable(),
@@ -180,18 +180,18 @@ const user = z.object({
   pool_year: z.string().nullable(),
   location: z.string().nullable(),
   wallet: z.number().nullable(),
-  created_at: z.string().nullable(),
+  created_at: z.string(),
   updated_at: z.string().nullable(),
 });
 
 export const createScaleTeamSchema = z.object({
   body: z.object({
-    id: z.number().nullable(),
+    id: z.number(),
     team: teamSchema,
     truant: z.string().nullable(),
     flag: flagSchema,
     scale: scaleSchema,
-    begin_at: z.string().nullable(),
+    begin_at: z.string(),
     comment: z.string().nullable(),
     old_feedback: z.string().nullable(),
     feedback_rating: z.string().nullable(),
@@ -199,7 +199,7 @@ export const createScaleTeamSchema = z.object({
     token: z.string().nullable(),
     ip: z.string().nullable(),
     filled_at: z.string().nullable(),
-    created_at: z.string().nullable(),
+    created_at: z.string(),
     updated_at: z.string().nullable(),
     project: project,
     user: user,
