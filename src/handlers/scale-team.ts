@@ -27,9 +27,9 @@ export const handleScaleTeam = createHandler(
             {
               title: `${body.project.name}`,
               description: `Begin At: ${new Date(
-                body.begin_at
+                body.begin_at ?? body.created_at
               ).toLocaleString()}\n\nEvaluate by: ${
-                body.user.login
+                body.user ? body.user.login : "System Auto Evaluation"
               }\n\nTeam members:\n${team.users
                 .map((user) => user.login)
                 .join("\n")}`,
