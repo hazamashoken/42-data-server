@@ -1,6 +1,6 @@
 FROM node:22-bookworm-slim AS base
 
-RUN apt update && apt install -y
+RUN apt update && apt install -y wget
 COPY . /app
 WORKDIR /app
 
