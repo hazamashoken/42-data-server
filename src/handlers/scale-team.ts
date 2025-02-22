@@ -3,6 +3,7 @@ import { createHandler } from "../utils/create.js";
 import { api } from "../api/intra.js";
 import { fetchTeam } from "../api/fetches.js";
 import { logger as defaultLogger } from "../logger.js";
+import { isPiscineProjects } from "../lib/piscine-project.js";
 
 const { DISCORD_WEBHOOK_EVAL, AVATAR_URL } = process.env;
 
@@ -17,7 +18,11 @@ export const handleScaleTeam = createHandler(
       const teams = await fetchTeam(api, body.team.id.toString());
       const team = teams![0]!;
 
-      const res = await fetch(DISCORD_WEBHOOK_EVAL!, {
+      if (isPiscineProjects(body.project.id)) {
+        res.status(201).send();
+      }
+
+      const dwh_res = await fetch(DISCORD_WEBHOOK_EVAL!, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +45,7 @@ export const handleScaleTeam = createHandler(
           username: "42 Evaluation Tracker",
         }),
       });
-      if (!res.ok) {
+      if (!dwh_res.ok) {
         const data = await res.json();
         logger.error(
           "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
