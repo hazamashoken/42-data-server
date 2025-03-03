@@ -53,3 +53,24 @@ export async function fetchTeam(api: Fast42, teamId: string): Team[] | null {
     return null;
   }
 }
+
+export async function fetchLocationStats(
+  //@ts-ignore
+  api: Fast42,
+  login: string,
+  begin_at?: string,
+): Promise<Record<string, string>[] | null> {
+  try {
+    const options = !!begin_at ? { begin_at: begin_at } : undefined;
+    const locations = await fetchAll42(
+      api,
+      `/users/${login}/locations_stats`,
+      options,
+    );
+
+    return locations;
+  } catch (error) {
+    logger.error(error);
+    return null;
+  }
+}

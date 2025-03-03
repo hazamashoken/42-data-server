@@ -4,6 +4,7 @@ import { CronJob } from "cron";
 // import { deviceCache } from "../lib/cache.js";
 // import { deviceTrackerWH } from "../discord/webhook-sender.js";
 import { checkRMQQueue } from "../lib/rmq_queue_parser.js";
+import { processLocationsStat } from "../lib/location-stat.js";
 // import consola from "consola";
 
 // const hosts = ips;
@@ -34,6 +35,14 @@ export const cronRMQ = CronJob.from({
   cronTime: "*/1 * * * *",
   onTick: async function () {
     await checkRMQQueue();
+  },
+  timeZone: "Asia/Singapore",
+});
+
+export const cronJobLocationsStat = CronJob.from({
+  cronTime: "0 * * * *",
+  onTick: async function () {
+    await processLocationsStat();
   },
   timeZone: "Asia/Singapore",
 });

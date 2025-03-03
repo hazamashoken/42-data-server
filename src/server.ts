@@ -7,8 +7,9 @@ import { errorHandler, handle404Error } from "./utils/errors.js";
 import { logger as middleLogger  } from "./utils/logger.js";
 import routes from "./routes/routes.js";
 import "./api/intra.js";
-import { cronRMQ } from "./cron/check-devices.js";
+import { cronJobLocationsStat, cronRMQ } from "./cron/check-devices.js";
 import { logger } from "./logger.js";
+import { processLocationsStat } from "./lib/location-stat.js";
 
 const { PORT, PROXY } = process.env;
 
@@ -67,7 +68,9 @@ app.use(errorHandler);
 
 // cronCheckIPAlive.start();
 // sendWebhookDownStatus.start();
+await processLocationsStat("2023-05-06");
 cronRMQ.start();
+cronJobLocationsStat.start();
 
 app.listen(PORT, () => {
   logger.info(`Server is running on port http://localhost:${PORT}`);
