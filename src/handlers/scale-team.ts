@@ -20,6 +20,7 @@ export const handleScaleTeam = createHandler(
 
       if (isPiscineProjects(body.project.id)) {
         res.status(201).send();
+        return;
       }
 
       const dwh_res = await fetch(DISCORD_WEBHOOK_EVAL!, {
