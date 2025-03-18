@@ -21,15 +21,15 @@ export async function processLocationsStat(begin_at?: string) {
     const users = await db.query.cursusUsers.findMany({
       where: (cursusUser, {eq, and, isNull}) => and(eq(cursusUser.cursusId, 21), isNull(cursusUser.endAt)),
     });
-    logger.info(users)
+    // logger.info(users)
   
     for (const user of users) {
-      logger.info(user.login);
+      // logger.info(user.login);
       const locationStat = await fetchLocationStats(api, user.login!, begin_at);
       if (!locationStat || R.isEmpty(locationStat[0]!)) {
         continue;
       }
-      logger.info(user.login);
+      // logger.info(user.login);
   
       for (const location of locationStat) {
         for (const date in location) {
@@ -41,7 +41,7 @@ export async function processLocationsStat(begin_at?: string) {
           };
           
           try {
-            logger.info(`Inserting location stat for ${user.login} on ${date}`);
+            // logger.info(`Inserting location stat for ${user.login} on ${date}`);
             await db.insert(locationStats).values(payload).onConflictDoUpdate({
                 target: locationStats.id,
                 set: {
