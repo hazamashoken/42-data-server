@@ -48,6 +48,7 @@ export function createHandler<T extends z.ZodType>(
       }
     }
     catch (error) {
+      logger.info(req.body);
       logger.info(error);
       next(error);
     }
