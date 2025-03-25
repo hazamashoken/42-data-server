@@ -18,9 +18,9 @@ export interface FreezeFreezeWH {
 
 export const freezeFreezeSchema = z.object({
   body: z.object({
-    user_id: z.string(),
-    login: z.string(),
-    status: z.string(),
+    user_id: z.number(),
+    login: z.string().nullable(),
+    status: z.string().nullable(),
     begin_date: z.string().nullable(),
     expected_end_date: z.string().nullable(),
     effective_end_date: z.string().nullable(),
