@@ -4,7 +4,7 @@ import { freezeUserSchema } from '../schema/freeze-user.js';
 
 const { DISCORD_WEBHOOK_FREEZE, AVATAR_URL } = process.env;
 
-const logger = defaultLogger.child({ service: "scale-team" });
+const logger = defaultLogger.child({ service: "freeze-user" });
 
 export const handleWHFreezeUser = createHandler(
   freezeUserSchema,
