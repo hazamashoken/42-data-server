@@ -20,11 +20,8 @@ export const logger = createLogger({
             format: format.combine(
               format.colorize({ all: true }),
               format.padLevels(),
-              format.timestamp({
-                format: 'YYYY-MM-DD hh:mm:ss.SSS A',
-              }),
               consoleFormat({
-                showMeta: true,
+                showMeta: true, 
                 metaStrip: ["timestamp", "service"],
                 inspectOptions: {
                   depth: Infinity,

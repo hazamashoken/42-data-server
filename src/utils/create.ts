@@ -48,8 +48,8 @@ export function createHandler<T extends z.ZodType>(
       }
     }
     catch (error) {
-      logger.info(req.body);
-      logger.info(error);
+      logger.error(req.body);
+      logger.error(error);
       next(error);
     }
   };
