@@ -74,3 +74,17 @@ export async function fetchLocationStats(
     return null;
   }
 }
+
+export async function fetchUser(
+  //@ts-ignore
+  api: Fast42, 
+  login: string
+) {
+  try {
+    const user = await fetchAll42(api, `/users/${login}`);
+    return user;
+  } catch (error) {
+    logger.error(error);
+    return null;
+  }
+}
