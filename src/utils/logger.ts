@@ -10,11 +10,9 @@ export function logger(req: Request, _res: Response, next: NextFunction) {
 
   const message = `${ip} [${method}] ${url} HTTP/${version} ${userAgent}`;
 
-  if (url === "/healthcheck") {
-    next();
+  if (url !== "/healthcheck") {
+    wsLogger.info(message);
   }
-  
-  wsLogger.info(message);
 
   next();
 }
