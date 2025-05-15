@@ -4,6 +4,6 @@ import internalRoutes from "../routes/internalRoutes.js"
 import { createRouter } from "../utils/create.js";
 
 export default createRouter((router: Router) => {
-  router.use("/webhook", webhookRoutes);
-  router.use("/internal", internalRoutes);
+  router.use("/internal", internalRoutes),
+  router.use("/webhook", webhookRoutes)
 });
