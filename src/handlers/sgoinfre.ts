@@ -16,7 +16,10 @@ export const handleSgoinfreSize = createHandler(
   createSogoinfreSchema,
   async (req, res) => {
     const body = req.body;
+    // logger.info("Sgoinfre size report", body);
+    try {
 
+    
     const dwh_res = await fetch(DISCORD_WEBHOOK_STORAGE!, {
         method: "POST",
         headers: {
@@ -39,5 +42,10 @@ export const handleSgoinfreSize = createHandler(
           "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
         );
       }
+    } catch (error) {
+      logger.error(error);
+    }
+
+    res.status(201).send();
   }
 )
