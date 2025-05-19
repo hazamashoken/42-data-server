@@ -16,9 +16,14 @@ export const handleSgoinfreSize = createHandler(
   createSogoinfreSchema,
   async (req, res) => {
     const body = req.body;
-    // logger.info("Sgoinfre size report", body);
     try {
 
+    const description = `${body
+      .filter((val) => val.size > 32212254720)
+      .sort((a, b) => a.size - b.size)
+      .map((user) => `${user.name} : ${byteToHumanSize(user.size)}`).join("\n")}`
+
+    // console.log("Sgoinfre size report", description);
     
     const dwh_res = await fetch(DISCORD_WEBHOOK_STORAGE!, {
         method: "POST",
@@ -29,7 +34,7 @@ export const handleSgoinfreSize = createHandler(
           embeds: [
             {
               title: "Sgoinfre Size Report" ,
-              description: `${body.map((user) => `\`${user.name}\` : ${byteToHumanSize(user.size)}`).join("\n")}`,
+              description: description,
             },
           ],
           avatar_url: AVATAR_URL,
@@ -37,7 +42,7 @@ export const handleSgoinfreSize = createHandler(
         }),
       });
       if (!dwh_res.ok) {
-        const data = await res.json();
+        const data = await dwh_res.json();
         logger.error(
           "Failed to send Discord webhook: " + JSON.stringify(data, null, 2)
         );
