@@ -5,7 +5,7 @@ export const handleTransaction = createHandler(
   async (req, res) => {
     const body = req.body;
     try {
-      logger.log(body);
+      logger.info(body);
     } catch (error) {
 
     }
