@@ -28,15 +28,15 @@ export const handleTransaction = createHandler(
     const body = req.body;
     try {
       logger.info(body);
-      switch (body.trasactable_type) {
+      switch (body.transactable_type) {
         case "Product":
           const msg = {
             embeds: [
               {
                 title: "Intra Shop",
-                description: `**${body.user.login}** have buy **${body.transactable?.name}** for **${body.value}**`,
+                description: `**${body.user.login}** have buy **${body.reason}** for **${body.value}**`,
                 image: {
-                  url: body.transactable?.image.link,
+                  url: typeof body.transactable !== "string" ? body.transactable?.image.link : "",
                 }   
               },
             ],
@@ -77,7 +77,7 @@ export const handleTransaction = createHandler(
           }
           break;
         default:
-          logger.error("Unknown trasactable_type", body.trasactable_type);
+          logger.error("Unknown trasactable_type", body.transactable_type);
           break;
       }
     } catch (error) {

@@ -5,8 +5,8 @@ export const createTransactionSchema = z.object({
     id: z.number(),
     value: z.number(),
     user_id: z.number(),
-    trasactable_id: z.number(),
-    trasactable_type: z.string(),
+    transactable_id: z.number(),
+    transactable_type: z.string(),
     created_at: z.string(),
     reason: z.string(),
     user: z.object({
@@ -38,7 +38,7 @@ export const createTransactionSchema = z.object({
       position: z.number(),
       reward: z.string(),
       title_id: z.number().nullable(),
-    }).nullable(),
+    }).nullable().or(z.string().nullable()),
   })
 })
 
