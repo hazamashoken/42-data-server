@@ -27,7 +27,7 @@ export const handleTransaction = createHandler(
   async (req, res) => {
     const body = req.body;
     try {
-      logger.info(body);
+      // logger.info(body);
       switch (body.transactable_type) {
         case "Product":
           const msg = {
