@@ -77,7 +77,6 @@ export const handleTransaction = createHandler(
           }
           break;
         default:
-          logger.error("Unknown trasactable_type", body.transactable_type);
           break;
       }
     } catch (error) {
