@@ -5,7 +5,7 @@ export const createTransactionSchema = z.object({
     id: z.number(),
     value: z.number(),
     user_id: z.number(),
-    transactable_id: z.number(),
+    transactable_id: z.number().nullable(),
     transactable_type: z.string(),
     created_at: z.string(),
     reason: z.string(),
