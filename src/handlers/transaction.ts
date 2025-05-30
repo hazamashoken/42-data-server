@@ -34,7 +34,7 @@ export const handleTransaction = createHandler(
             embeds: [
               {
                 title: "Intra Shop",
-                description: `**${body.user.login}** have buy **${body.reason}** for **${body.value}**`,
+                description: `**${body.user.login}** have brought **${body.reason}** for **${body.value}**`,
                 image: {
                   url: typeof body.transactable !== "string" ? body.transactable?.image.link : "",
                 }   
@@ -60,7 +60,7 @@ export const handleTransaction = createHandler(
             embeds: [
               {
                 title: "Intra Altarian Tracker",
-                description: `**${body.user.login}** earn **${body.value}** from **${body.reason}**`,
+                description: `**${body.user.login}** earned **${body.value}** from **${body.reason}**`,
               },
             ],
           }
